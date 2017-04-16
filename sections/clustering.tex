@@ -1,6 +1,32 @@
 \chapter{Clustering}
 
+\section{Kmeans}
+Kmeans is a good general clustering technique. It attempts to group your data into a specified number of clusters. Luckily R has an inbuilt  function ``kmeans'' that can be used.
+
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{images/kmeans_01.png}
+\end{center}
+
+To use kmeans you must first pull out the features of the data that you want to cluster on. Then you can pass the data into the kmeans function, specifying the number of clusters that you want, and it will return information about the generated clusters.
+
+\begin{verbatim}
+myData <- offABClustering[,c("logP", "phi31", "amp.I")]
+clusters <- kmeans(myData, 3)
+\end{verbatim}
+
+If you want to pull out just the cluster ids that kmeans generates in order to store that information in your dataframe, you can pull it out as a ``cluster'' feature and turn it into a factor.
+
+\begin{verbatim}
+offABClustering$cluster <- factor(clusters$cluster)
+\end{verbatim}
+
 \section{Support Vector Machines}
+Support Vector Machines are a clustering technique that tries to separate data using a linear line, however through the use of kernels it is able transform the data space to give clusters that are non-linear in normal space.
+
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{images/ksvm_01.png}
+\end{center}
+
 There are several libraries in R for using support vector machines (SVM).
 
 \begin{itemize}
@@ -22,8 +48,6 @@ The ksvm function will give you a model which you can then use to classify your 
 predictions <- predict(ksvmModel, myData)
 offABClustering$cluster <- as.factor(predictions)
 \end{verbatim}
-
-\includegraphics[]{images/ksvm_01.png}
 
 \subsection{Kernels}
 The ksvm function offers a few different kernels that you can use to change how it clusters the data. Each of these kernels will cluster the data into different ``shapes'' ranging from linear separations to rings. It looks like ksvm uses the ``rbfdot'' kernel by default.
