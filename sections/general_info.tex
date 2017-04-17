@@ -1,0 +1,43 @@
+\chapter{General Information}
+
+\section{Reading in data files}
+When you are trying to cluster and classify data, typically the first step is reading in the data from a file. There are several different ways that data is typically stored in a data file, the most common formats are comma separated values (csv) or tab separated values (tsv). For both of these types of files, R has some inbuilt functions for reading them into data frames.
+
+Typically csv files tend to be easier to read in, as they usually have proper column labels and very simple value separation. Tsv files can vary in their formatting between tabs and different types of spacing, and often do not have column labels.
+
+\subsection{CSV files}
+Csv files are very easy to read in with R. Let's consider the following csv file.
+
+\begin{verbatim}
+id,mag,amp,error
+00001,20.123,19.312,0.2486362
+00003,19.02,20.2,0.47823
+00004,18.8,21.389,0.277669
+\end{verbatim}
+
+In R you can read in csv files using the \verb|read.csv| function. We must note that this csv file has column headers, so we need to add an argument to indicate this.
+
+\begin{verbatim}
+myData <- read.csv("data.csv", header=TRUE)
+\end{verbatim}
+
+\subsection{TSV files}
+Let's take a look at a more unusual tsv file and read it in to R. This tsv file uses a special format that allocates a specific width to each column, such that a non-standard amount of additional spaces are added for padding.
+
+\begin{verbatim}
+00001  20.123 19.312  0.2486362
+00003  19.023 20.213  0.4782373
+00004  18.789 21.389  0.2776688
+\end{verbatim}
+
+To read this data in with R we need to use the \verb|read.table| function. We must note that the data file does not have column headers, and does not have a sepcific separater string.
+
+\begin{verbatim}
+myData <- read.table("data.tsv")
+\end{verbatim}
+
+The resulting data frame will include all of the given data, however its column names with be generic. The next thing we will need to do is to label the columns. In R there are many different ways to rename columns, however since we want to rename all of the columns we can make use of the \verb|names| function.
+
+\begin{verbatim}
+names(myData) <- c("id", "mag", "amp", "error")
+\end{verbatim}
