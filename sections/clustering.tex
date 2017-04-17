@@ -1,20 +1,20 @@
 \chapter{Clustering}
 
 \section{Kmeans}
-Kmeans is a good general clustering technique. It attempts to group your data into a specified number of clusters. Luckily R has an inbuilt  function ``kmeans'' that can be used.
+Kmeans is a good general clustering technique. It attempts to group your data into a specified number of clusters. Luckily R has an inbuilt function \verb|kmeans| that can be used.
 
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{images/kmeans_01.png}
 \end{center}
 
-To use kmeans you must first pull out the features of the data that you want to cluster on. Then you can pass the data into the kmeans function, specifying the number of clusters that you want, and it will return information about the generated clusters.
+To use \verb|kmeans| you must first pull out the features of the data that you want to cluster on. Then you can pass the data into the kmeans function, specifying the number of clusters that you want, and it will return information about the generated clusters.
 
 \begin{verbatim}
 myData <- offABClustering[,c("logP", "phi31", "amp.I")]
 clusters <- kmeans(myData, 3)
 \end{verbatim}
 
-If you want to pull out just the cluster ids that kmeans generates in order to store that information in your dataframe, you can pull it out as a ``cluster'' feature and turn it into a factor.
+If you want to pull out just the cluster ids that kmeans generates in order to store that information in your dataframe, you can pull it out as a \verb|cluster| feature and turn it into a factor.
 
 \begin{verbatim}
 offABClustering$cluster <- factor(clusters$cluster)
@@ -30,11 +30,11 @@ Support Vector Machines are a clustering technique that tries to separate data u
 There are several libraries in R for using support vector machines (SVM).
 
 \begin{itemize}
-	\item kernlab
-	\item e1071
+	\item \verb|kernlab|
+	\item \verb|e1071|
 \end{itemize}
 
-Let's take a look at the kernlab library for now. To cluster data using an SVM with kernlab you need to pull out just the features you want and then convert that dataframe into a matrix. Then you can pass the resulting matrix into the ksvm function.
+Let's take a look at the \verb|kernlab| library for now. To cluster data using an SVM with kernlab you need to pull out just the features you want and then convert that dataframe into a matrix. Then you can pass the resulting matrix into the ksvm function.
 
 \begin{verbatim}
 myData <- offABClustering[,c("logP", "phi31", "amp.I")]
@@ -50,17 +50,17 @@ offABClustering$cluster <- as.factor(predictions)
 \end{verbatim}
 
 \subsection{Kernels}
-The ksvm function offers a few different kernels that you can use to change how it clusters the data. Each of these kernels will cluster the data into different ``shapes'' ranging from linear separations to rings. It looks like ksvm uses the ``rbfdot'' kernel by default.
+The ksvm function offers a few different kernels that you can use to change how it clusters the data. Each of these kernels will cluster the data into different shapes ranging from linear separations to rings. It looks like ksvm uses the \verb|rbfdot| kernel by default.
 
 \begin{itemize}
-	\item rbfdot Radial Basis kernel "Gaussian"
-	\item polydot Polynomial kernel
-	\item vanilladot Linear kernel
-	\item tanhdot Hyperbolic tangent kernel
-	\item laplacedot Laplacian kernel
-	\item besseldot Bessel kernel
-	\item anovadot ANOVA RBF kernel
-	\item splinedot Spline kernel
+	\item \verb|rbfdot| Radial Basis kernel "Gaussian"
+	\item \verb|polydot| Polynomial kernel
+	\item \verb|vanilladot| Linear kernel
+	\item \verb|tanhdot| Hyperbolic tangent kernel
+	\item \verb|laplacedot| Laplacian kernel
+	\item \verb|besseldot| Bessel kernel
+	\item \verb|anovadot| ANOVA RBF kernel
+	\item \verb|splinedot| Spline kernel
 \end{itemize}
 
 You can specify the kernel to be used in ksvm, by adding a kernel parameter where you pass in the name of the kernel you want to use as a string.
@@ -71,12 +71,12 @@ ksvmModel <- ksvm(myMatrix, kernel = "vanilladot")
 
 \begin{longtable}{ c c }
 	\includegraphics[width=0.3\paperwidth]{images/ksvm_rbfdot.png} & \includegraphics[width=0.3\paperwidth]{images/ksvm_polydot.png} \\
-	rbfdot & polydot \\
+	\verb|rbfdot| & \verb|polydot| \\
 	\includegraphics[width=0.3\paperwidth]{images/ksvm_vanilladot.png} & \includegraphics[width=0.3\paperwidth]{images/ksvm_tanhdot.png} \\
-	vanilladot & tanhdot \\
+	\verb|vanilladot| & \verb|tanhdot| \\
 	\includegraphics[width=0.3\paperwidth]{images/ksvm_laplacedot.png} & \includegraphics[width=0.3\paperwidth]{images/ksvm_besseldot.png} \\
-	laplacedot & besseldot \\
+	\verb|laplacedot| & \verb|besseldot| \\
 	\includegraphics[width=0.3\paperwidth]{images/ksvm_anovadot.png} & \includegraphics[width=0.3\paperwidth]{images/ksvm_splinedot.png} \\
-	anovadot & splinedot \\
+	\verb|anovadot| & \verb|splinedot| \\
 \end{longtable}
 
