@@ -41,3 +41,28 @@ The resulting data frame will include all of the given data, however its column 
 \begin{verbatim}
 names(myData) <- c("id", "mag", "amp", "error")
 \end{verbatim}
+
+\section{Normalizing data}
+Before you do any sort of clustering on data, you should first normalize the data. Datasets generally have features that are of different units and ranges of values and this must be taken into account when performing clustering.
+
+To normalize a data frame in R, you can use the \verb|scale| function.
+
+\begin{verbatim}
+normalizedData <- scale(myData)
+\end{verbatim}
+
+\section{Misc. Functions}
+
+\subsection{Conversion functions}
+To convert a numerical factor into the corresponding num representations you can use a combination of the \verb|as.character| and \verb|as.numeric| functions. Any values that are not able to be converted into numeric values will be converted into \verb|NA|s.
+
+\begin{verbatim}
+myData$phi31 <- as.numeric(as.character(myData$phi31))
+\end{verbatim}
+
+\subsection{Mapping functions}
+To map a function over the rows of a data frame and be able to access specific columns you can use the \verb|with| function.
+
+\begin{verbatim}
+myData$logMag <- with(myData, log(mag))
+\end{verbatim}
