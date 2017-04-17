@@ -42,6 +42,55 @@ The resulting data frame will include all of the given data, however its column 
 names(myData) <- c("id", "mag", "amp", "error")
 \end{verbatim}
 
+\section{Plotting data}
+Once you have read in your data it is always a good idea to visualize your data to get a general idea of what it looks like and how it might cluster. How you should visualize your data depends on how many features it has and what features of it you want to look at.
+
+If you just want to look at one or two features, you can use the \verb|ggplot2| library to create plots of your data. The exact type of graph that you should use will depend on the data, but usually a scatter plot is a good first choice.
+
+If you want to look at three features of your data at the same time, you can use the \verb|plotly| library to visualize it. The library offers good 3d scatter plots that can be very useful.
+
+\subsection{plotly}
+The \verb|plotly| library is a good library for plotting 3d data graphs. In particular the 3d scatter plots that it offers are very useful.
+
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{images/kmeans_01.png}
+\end{center}
+
+To create a 3d scatter plot you need to specify the data frame and x,y,z axes. You can also give axes titles as well, in the case that you use shortened versions of the feature names.
+
+\begin{verbatim}
+plot_ly(myData, x = ~mag, y = ~amp, z = ~err) %>%
+  add_markers() %>%
+  layout(scene = list(
+    xaxis = list(title = "Magnitude"),
+    yaxis = list(title = "Amplitude"),
+    zaxis = list(title = "Error")))
+\end{verbatim}
+
+If you are trying to plot a lot of data, then you may find the default point sizes to be too large. To decrease the size of the points you can give a \verb|maker| parameter where you specify the size of the points.
+
+\begin{verbatim}
+plot_ly(myData, x = ~mag, y = ~amp, z = ~err,
+    marker = list(size = 1)) %>%
+  add_markers() %>%
+  layout(scene = list(
+    xaxis = list(title = "Magnitude"),
+    yaxis = list(title = "Amplitude"),
+    zaxis = list(title = "Error")))
+\end{verbatim}
+
+If you want to plot clusters or otherwise color the points based on a feature, you can give a \verb|color| parameter to specify the column to color the points based on. Additionally you can specify the colors to use for the plot by providing a \verb|colors| parameter.
+
+\begin{verbatim}
+plot_ly(myData, x = ~mag, y = ~amp, z = ~err, color = ~cluster,
+    colors = c("#e74c3c", "#3498db")) %>%
+  add_markers() %>%
+  layout(scene = list(
+    xaxis = list(title = "Magnitude"),
+    yaxis = list(title = "Amplitude"),
+    zaxis = list(title = "Error")))
+\end{verbatim}
+
 \section{Normalizing data}
 Before you do any sort of clustering on data, you should first normalize the data. Datasets generally have features that are of different units and ranges of values and this must be taken into account when performing clustering.
 
